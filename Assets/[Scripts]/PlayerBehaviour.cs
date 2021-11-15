@@ -7,6 +7,7 @@
  * Revision History : v0.1 > Added Comments to know the Code better before start anything & to include a program header
  *                    v0.2 > Added function for the Movement of the Player
  *                    v0.3 > Added Jumping and movement using Raycast and Fixedupdate,Added Player Animation
+ *                    v0.4 > Added Animation and AirControl 
  */
 
 
@@ -25,12 +26,21 @@ public class PlayerBehaviour : MonoBehaviour
     public float GroundRadius;
     public LayerMask GroundLayerMask;
 
+    [Range(0.1f,0.9f)]
+    public float AirControlFactor;
+
     private Rigidbody2D RigidBody;
+
+    private Animator AnimatorController;
+
+    [Header("Animation")]
+    public PlayerAnimationState State;
 
     // Start is called before the first frame update
     void Start()
     {
         RigidBody = GetComponent<Rigidbody2D>();
+        AnimatorController = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -42,19 +52,27 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Move()
     {
+        float x = Input.GetAxisRaw("Horizontal");
 
         if (isGrounded)
         {
             float DeltaTime = Time.deltaTime;
 
             //Inputs for Keyboards
-            float x = Input.GetAxisRaw("Horizontal");
+           
             float y = Input.GetAxisRaw("Vertical");
             float Jump = Input.GetAxisRaw("Jump");
 
             if (x != 0)
             {
                 x = FlipAnimation(x);
+                AnimatorController.SetInteger("AnimationState", 1);     //RUN State
+                State = PlayerAnimationState.RUN;
+            }
+            else
+            {
+                AnimatorController.SetInteger("AnimationState", 0);     //IDLE State
+                State = PlayerAnimationState.IDLE;
             }
             //This is for Inputs for Touch
             Vector2 WorldTouch = new Vector2();
@@ -71,6 +89,22 @@ public class PlayerBehaviour : MonoBehaviour
 
             RigidBody.AddForce(new Vector2(HorizontalMoveForce, JumpMoveForce) * Mass);
             RigidBody.velocity *= 0.99f;
+        }
+        else
+        {
+            AnimatorController.SetInteger("AnimationState", 2);     //JUMP State
+            State = PlayerAnimationState.JUMP;
+
+            if (x != 0)
+            {
+                x = FlipAnimation(x);
+
+                float HorizontalMoveForce = x * HorizontalForce * AirControlFactor;
+
+                float Mass = RigidBody.mass * RigidBody.gravityScale;
+
+                RigidBody.AddForce(new Vector2(HorizontalMoveForce, 0.0f) * Mass);
+            }
         }
     }
 
