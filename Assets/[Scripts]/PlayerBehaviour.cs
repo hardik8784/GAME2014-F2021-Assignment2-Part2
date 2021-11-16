@@ -3,11 +3,12 @@
  * Student ID : 101249099
  * Date Modified : November 15,2021
  * File : PlayerBehaviour.cs
- * Description : This is the UI Behaviour Script
+ * Description : This is the Player Behaviour Script
  * Revision History : v0.1 > Added Comments to know the Code better before start anything & to include a program header
  *                    v0.2 > Added function for the Movement of the Player
  *                    v0.3 > Added Jumping and movement using Raycast and Fixedupdate,Added Player Animation
  *                    v0.4 > Added Animation and AirControl 
+ *                    v0.5 > Added Player position to the movingplatform's position using OncollisionEnter and Exit function
  */
 
 
@@ -138,5 +139,21 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(GroundOrigin.position,GroundRadius);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Platform"))
+        {
+            transform.SetParent(collision.transform);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            transform.SetParent(null);
+        }
     }
 }

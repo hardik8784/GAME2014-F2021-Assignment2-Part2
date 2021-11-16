@@ -2,8 +2,8 @@
  * Full Name: Hardik Dipakbhai Shah
  * Student ID : 101249099
  * Date Modified : November 15,2021
- * File : PlayerBehaviour.cs
- * Description : This is the UI Behaviour Script
+ * File : DeathPlaneController.cs
+ * Description : This is the Death PlaneController Script
  * Revision History : v0.1 > Added Comments to know the Code better before start anything & to include a program header
  *                    v0.2 > If Player collides with the deathplane, it respawns to PlayerSpawnPoint
  */
