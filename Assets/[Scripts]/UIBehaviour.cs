@@ -38,7 +38,7 @@ public class UIBehaviour : MonoBehaviour
 
     public void OnMainMenuButtonPressed()                                           // This code is to change the scene from GameOverScreen to MenuScreen
     {
-        SceneManager.LoadScene("MenuScreen");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void OnQuitButtonPressed()

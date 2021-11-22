@@ -15,6 +15,9 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Player Detection")]
+    public LOS EnemyLOS;
+
     [Header("Movement")]
     public float RunForce;
     public Transform LookAheadPoint;
@@ -23,11 +26,16 @@ public class EnemyController : MonoBehaviour
     public LayerMask ObstacleLayerMask;
     public bool isGroundAhead;
 
+    [Header("Animation")]
+    public Animator AnimationController;
+
     private Rigidbody2D RigidBody;
     // Start is called before the first frame update
     void Start()
     {
         RigidBody = GetComponent<Rigidbody2D>();
+        EnemyLOS = GetComponent<LOS>();
+        AnimationController = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -35,7 +43,42 @@ public class EnemyController : MonoBehaviour
     {
         LookAhead();
         LookInFront();
-        MoveEnemy();
+        if (!HasLOS())
+        {
+            AnimationController.enabled = true;
+            AnimationController.Play("Enemy-Clip");
+            MoveEnemy();
+        }
+        else
+        {
+            AnimationController.enabled = false;
+        }
+    }
+
+    private bool HasLOS()
+    {
+        if(EnemyLOS.ColliderList.Count > 0)
+        {
+            if((EnemyLOS.CollidesWith.gameObject.CompareTag("Player") && (EnemyLOS.ColliderList[0].gameObject.CompareTag("Player"))))
+            {
+                return true;
+            }
+        }
+        else 
+        {
+            foreach(var Collider in EnemyLOS.ColliderList)
+            {
+                if(Collider.gameObject.CompareTag("Player"))
+                {
+                    var Hit = Physics2D.Raycast(LookInFrontPoint.position, Vector3.Normalize(Collider.transform.position - LookInFrontPoint.position),5.0f, EnemyLOS.ContactFilter.layerMask);
+                    if((Hit)&&(Hit.collider.gameObject.CompareTag("Player")))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private void LookAhead()

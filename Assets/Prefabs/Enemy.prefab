@@ -73,7 +73,9 @@ GameObject:
   - component: {fileID: 6340712540369058439}
   - component: {fileID: 6340712540369058555}
   - component: {fileID: 6171675983223689247}
+  - component: {fileID: -8313291526910627021}
   - component: {fileID: 6340712540369058436}
+  - component: {fileID: 7912911994316681223}
   - component: {fileID: 1936272198101391025}
   m_Layer: 0
   m_Name: Enemy
@@ -218,6 +220,34 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!60 &-8313291526910627021
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6340712540369058432}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.875, y: 3.0625}
+    newSize: {x: 2.875, y: 3.0625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1.5, y: 0}
+      - {x: -14.5, y: 1.5}
+      - {x: -14.5, y: -0.6}
 --- !u!50 &6340712540369058436
 Rigidbody2D:
   serializedVersion: 4
@@ -239,6 +269,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &7912911994316681223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6340712540369058432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b3cee7efa2acd448b5c6e0599252f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollidesWith: {fileID: 0}
+  ContactFilter:
+    useTriggers: 1
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 448
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  ColliderList: []
 --- !u!114 &1936272198101391025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209e505d4852ceb49baef6b76b632edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyLOS: {fileID: 0}
   RunForce: 5
   LookAheadPoint: {fileID: 200632945}
   LookInFrontPoint: {fileID: 1807366044}
@@ -261,3 +320,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   isGroundAhead: 0
+  AnimationController: {fileID: 0}

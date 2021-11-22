@@ -19,6 +19,12 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    [Header("Touch Input")]
+    public Joystick Joystick;
+    [Range(0.01f,1.0f
+        )]
+    public float Sensitivity;
+
     [Header("Movement")]
     public float HorizontalForce;
     public float VerticalForce;
@@ -53,7 +59,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Move()
     {
-        float x = Input.GetAxisRaw("Horizontal");
+        float x = (Input.GetAxisRaw("Horizontal") + Joystick.Horizontal)* Sensitivity;
 
         if (isGrounded)
         {
@@ -61,8 +67,8 @@ public class PlayerBehaviour : MonoBehaviour
 
             //Inputs for Keyboards
            
-            float y = Input.GetAxisRaw("Vertical");
-            float Jump = Input.GetAxisRaw("Jump");
+            float y = (Input.GetAxisRaw("Vertical") +Joystick.Vertical)*Sensitivity;
+            float Jump = Input.GetAxisRaw("Jump") + ((UIController.JumpButtonDown) ? 1.0f : 0.0f);
 
             if (x != 0)
             {
@@ -75,12 +81,12 @@ public class PlayerBehaviour : MonoBehaviour
                 AnimatorController.SetInteger("AnimationState", 0);     //IDLE State
                 State = PlayerAnimationState.IDLE;
             }
-            //This is for Inputs for Touch
-            Vector2 WorldTouch = new Vector2();
-            foreach (var Touch in Input.touches)
-            {
-                WorldTouch = Camera.main.ScreenToWorldPoint(Touch.position);
-            }
+            ////This is for Inputs for Touch
+            //Vector2 WorldTouch = new Vector2();
+            //foreach (var Touch in Input.touches)
+            //{
+            //    WorldTouch = Camera.main.ScreenToWorldPoint(Touch.position);
+            //}
 
 
             float HorizontalMoveForce = x * HorizontalForce;// * DeltaTime;
