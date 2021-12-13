@@ -1,7 +1,7 @@
 /*
  * Full Name: Hardik Dipakbhai Shah
  * Student ID : 101249099
- * Date Modified : November 15,2021
+ * Date Modified : December 12,2021
  * File : PlayerBehaviour.cs
  * Description : This is the Player Behaviour Script
  * Revision History : v0.1 > Added Comments to know the Code better before start anything & to include a program header
@@ -9,6 +9,7 @@
  *                    v0.3 > Added Jumping and movement using Raycast and Fixedupdate,Added Player Animation
  *                    v0.4 > Added Animation and AirControl 
  *                    v0.5 > Added Player position to the movingplatform's position using OncollisionEnter and Exit function
+ *                    v0.6 > Added Jump Sound
  */
 
 
@@ -43,6 +44,9 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Animation")]
     public PlayerAnimationState State;
 
+    [Header("Sound FX")]
+    public AudioSource jumpSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +73,12 @@ public class PlayerBehaviour : MonoBehaviour
            
             float y = (Input.GetAxisRaw("Vertical") +Joystick.Vertical)*Sensitivity;
             float Jump = Input.GetAxisRaw("Jump") + ((UIController.JumpButtonDown) ? 1.0f : 0.0f);
+
+            // jump activated
+            if (Jump > 0)
+            {
+                jumpSound.Play();
+            }
 
             if (x != 0)
             {

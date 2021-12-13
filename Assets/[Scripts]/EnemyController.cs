@@ -12,6 +12,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
@@ -128,6 +129,11 @@ public class EnemyController : MonoBehaviour
         {
             transform.SetParent(collision.transform);
         }
+
+        //else if(collision.gameObject.CompareTag("Player"))
+        //{
+        //    SceneManager.LoadScene("GameOver");
+        //}
     }
 
     private void OnCollisionExit2D(Collision2D collision)
